@@ -66,7 +66,7 @@ public class TankDriveTeleOp extends LinearOpMode {
             rightDrive.setPower(rightPower);
 
             // Use triggers to move flywheel
-            double rt = gamepad1.right_trigger;
+            double rt = gamepad1.right_trigger * 0.55;
             double lt = gamepad1.left_trigger;
 
             if (rt > 0.05) {
