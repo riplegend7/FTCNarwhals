@@ -32,7 +32,7 @@ public class AutonomousDrive extends LinearOpMode {
             leftDrive.setPower(-0.5);
             rightDrive.setPower(-0.5);
             sleep(1000);
-
+// note
             leftDrive.setPower(0);
             rightDrive.setPower(0);
 
