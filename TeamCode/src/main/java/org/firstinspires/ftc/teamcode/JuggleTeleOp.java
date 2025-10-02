@@ -39,7 +39,7 @@ public class JuggleTeleOp extends LinearOpMode {
 
             if (juggleActive) {
                 // set these speeds experimentally until it “juggles” properly
-                coreHex.setPower(0.6);    // gate motor speed
+                coreHex.setPower(1.0);    // gate motor speed
                 flywheel.setPower(0.21);   // flywheel speed
             } else {
                 coreHex.setPower(0);

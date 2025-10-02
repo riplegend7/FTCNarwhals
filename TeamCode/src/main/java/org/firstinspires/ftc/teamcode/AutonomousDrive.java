@@ -37,12 +37,12 @@ public class AutonomousDrive extends LinearOpMode {
             rightDrive.setPower(0);
 
             // Step 2: Spin up flywheel to 55% power
-            flywheel.setPower(0.55);
-            sleep(1000); // give it half a second to spin up
+            flywheel.setPower(0.60);
+            sleep(1500); // give it half a second to spin up
 
             // Step 3: Run gate for 1 sec
-            coreHex.setPower(0.5);
-            sleep(2500);
+            coreHex.setPower(1);
+            sleep(1000);
             coreHex.setPower(0);
 
             // Step 4: Stop flywheel

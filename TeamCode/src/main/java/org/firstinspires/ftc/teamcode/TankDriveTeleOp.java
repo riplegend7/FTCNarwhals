@@ -93,9 +93,9 @@ public class TankDriveTeleOp extends LinearOpMode {
             }
             // Use controller bumpers to move gate
             if (gamepad1.right_bumper) {
-                coreHex.setPower(0.8);   // spin forward
+                coreHex.setPower(1.0);   // spin forward
             } else if (gamepad1.left_bumper) {
-                coreHex.setPower(-0.8);  // spin backward
+                coreHex.setPower(-1.0);  // spin backward
             } else {
                 coreHex.setPower(0);     // stop
             }
