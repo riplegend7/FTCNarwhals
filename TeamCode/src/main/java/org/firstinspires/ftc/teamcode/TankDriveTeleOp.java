@@ -6,6 +6,7 @@ import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.util.ElapsedTime;
 import com.qualcomm.robotcore.hardware.Servo;
+import com.qualcomm.robotcore.hardware.DcMotorEx;
 
 /**
  * Tank Drive TeleOp
@@ -26,6 +27,11 @@ public class TankDriveTeleOp extends LinearOpMode {
     private DcMotor coreHex = null;
     private DcMotor flywheel = null;
     private Servo clawServo = null;
+    private boolean flywheelRunning = false;
+    private double flywheelStartTime = 0;
+    private Servo gateServo = null;
+    private static final int farVelocity = 1900;
+    private static final int bankVelocity = 1300;
 
 
     @Override
@@ -66,7 +72,7 @@ public class TankDriveTeleOp extends LinearOpMode {
             rightDrive.setPower(rightPower);
 
             // Use triggers to move flywheel
-            double rt = gamepad1.right_trigger * 0.55;
+            double rt = gamepad1.right_trigger * 0.70;
             double lt = gamepad1.left_trigger;
 
             if (rt > 0.05) {
@@ -100,11 +106,38 @@ public class TankDriveTeleOp extends LinearOpMode {
                 coreHex.setPower(0);     // stop
             }
 
-            // Show data on Driver Station
-            telemetry.addData("Status", "Run Time: " + runtime.toString());
-            telemetry.addData("Motors", "left (%.2f), right (%.2f)", leftPower, rightPower);
-            telemetry.addData("Flywheel", "power (%.2f)", flywheel.getPower());
-            telemetry.update();
+            // Use Letter Buttons to score
+            if (gamepad1.a) {
+                farPowerAuto();
+            }
+            if (gamepad1.b) {
+                bankShotAuto();
+            }
+
+            // Detect when flywheel turns on
+            if (!flywheelRunning && Math.abs(flywheel.getPower()) > 0.05) {
+                flywheelStartTime = runtime.seconds();
+                flywheelRunning = true;
+
+            }
+        }
+    }
+    private void farPowerAuto() {
+        ((DcMotorEx) flywheel).setVelocity(farVelocity);
+        clawServo.setPosition(1);
+        if (((DcMotorEx) flywheel).getVelocity() >= farVelocity - 100) {
+            coreHex.setPower(1);
+        } else {
+            coreHex.setPower(0);
+        }
+    }
+    private void bankShotAuto() {
+        ((DcMotorEx) flywheel).setVelocity(bankVelocity);
+        clawServo.setPosition(1);
+        if (((DcMotorEx) flywheel).getVelocity() >= bankVelocity - 50) {
+            coreHex.setPower(1);
+        } else {
+            coreHex.setPower(0);
         }
     }
 }
