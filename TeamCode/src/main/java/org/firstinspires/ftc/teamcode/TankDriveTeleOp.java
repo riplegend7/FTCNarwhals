@@ -32,6 +32,7 @@ public class TankDriveTeleOp extends LinearOpMode {
     private Servo gateServo = null;
     private static final int farVelocity = 1900;
     private static final int bankVelocity = 1300;
+    private static final int pressVel = 800;
 
 
     @Override
@@ -112,6 +113,8 @@ public class TankDriveTeleOp extends LinearOpMode {
             }
             if (gamepad1.b) {
                 bankShotAuto();
+            } else if (gamepad1.x) {
+                pressshotauto();
             }
 
             // Detect when flywheel turns on
@@ -135,6 +138,16 @@ public class TankDriveTeleOp extends LinearOpMode {
         ((DcMotorEx) flywheel).setVelocity(bankVelocity);
         clawServo.setPosition(1);
         if (((DcMotorEx) flywheel).getVelocity() >= bankVelocity - 50) {
+            coreHex.setPower(1);
+        } else {
+            coreHex.setPower(0);
+        }
+
+    }
+    private void pressshotauto() {
+        ((DcMotorEx) flywheel).setVelocity(pressVel);
+        clawServo.setPosition(1);
+        if (((DcMotorEx) flywheel).getVelocity() >= pressVel - 50) {
             coreHex.setPower(1);
         } else {
             coreHex.setPower(0);
